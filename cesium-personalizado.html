@@ -1,0 +1,76 @@
+<html lang="es">
+
+    <head>
+        <title>Ejemplo 0 Cesium básico</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="autor" />
+        <meta name="description" content="descripción página">
+        <meta name="robots" content="index,follow">
+        <script src="https://cesiumjs.org/releases/1.53/Build/Cesium/Cesium.js"></script>
+        <link href="https://cesiumjs.org/releases/1.53/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+        <style>
+            #map {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                overflow: hidden;
+                padding: 0;
+            }
+    
+            body {
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                height: 100%;
+            }
+        </style>
+        <script>
+            function Init() {
+
+                var terrain5M = new Cesium.CesiumTerrainProvider({
+                url: 'https://tilemaps.icgc.cat/terrenys/demextes/'
+                });
+                Cesium.Ion.defaultAccessToken =
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlMDYxMWEzZS0wYTM1LTRkNzAtODg1Yi0yYjliMzcyM2M3NDIiLCJpZCI6NzQ2Nywic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0OTQ3MTY5NH0.vtK60w3XM4Balil4Dd7sFw4TNQTwRiIXbKlSed751K4';
+                map = new Cesium.Viewer('map', {
+    
+                    imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+                        url: '//services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/',
+                    }),
+    
+                    timeline: false,
+                    navigationHelpButton: true,
+                    scene3DOnly: true,
+                    fullscreenButton: true,
+                    baseLayerPicker: false,
+                    homeButton: false,
+                    infoBox: true,
+                    sceneModePicker: false,
+                    animation: false,
+                    geocoder: true,
+                    sceneMode: Cesium.SceneMode.SCENE3D,
+                    terrainProvider: terrain5M,
+                    vrButton: true,
+    
+                });
+    
+    
+                map.camera.flyTo({
+                    destination: Cesium.Cartesian3.fromDegrees(2.1806, 41.4003, 15000),
+                    orientation: {
+                        pitch: Cesium.Math.toRadians(-45.0)
+                    },
+                });
+            };
+        </script>
+    </head>
+    
+    <body onload="Init()">
+        <div id="map"></div>
+    </body>
+    
+    </html>
